@@ -37,6 +37,7 @@ public class MinesweeperEngine
         else
         {
             Reveal(turn.Row, turn.Col);
+
             if (IsVictory)
             {
                 _game.Completed = true;
@@ -84,7 +85,7 @@ public class MinesweeperEngine
 
         if (Field[i][j].HasNoMinesAround)
         {
-            foreach (var (x, y) in Field.ValidNeighbours(i, j))
+            foreach (var (x, y) in Field.GetNeighbourIndexes(i, j))
             {
                 Reveal(x, y);
             }
@@ -96,8 +97,8 @@ public class MinesweeperEngine
         get
         {
             return Field
-            .SelectMany(row => row)
-            .Count(cell => cell.IsMine && !cell.Revealed) == _game.MinesCount;
+                .SelectMany(row => row)
+                .Count(cell => cell.IsMine && !cell.Revealed) == _game.MinesCount;
         }
     }
 

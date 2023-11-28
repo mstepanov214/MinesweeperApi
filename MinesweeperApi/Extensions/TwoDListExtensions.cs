@@ -2,7 +2,7 @@
 
 public static class TwoDListExtensions
 {
-    public static (int x, int y)[] ValidNeighbours<T>(this List<List<T>> field, int row, int col)
+    public static (int x, int y)[] GetNeighbourIndexes<T>(this List<List<T>> field, int row, int col)
     {
         var possibleNeighbours = new (int x, int y)[] {
             (row - 1, col),

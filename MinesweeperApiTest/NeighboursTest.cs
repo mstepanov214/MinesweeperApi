@@ -6,7 +6,7 @@ namespace MinesweeperApiTest;
 public class NeighboursTest
 {
     [TestMethod]
-    public void TwoDList_GetNeighbours()
+    public void TwoDList_GetNeighbourIndexes()
     {
         List<List<int>> field = [
             [1, 2, 3],
@@ -14,7 +14,7 @@ public class NeighboursTest
             [7, 8, 9]
         ];
 
-        var neighbours = field.ValidNeighbours(0, 0);
+        var neighbours = field.GetNeighbourIndexes(0, 0);
 
         Assert.AreEqual(neighbours.Length, 3);
         CollectionAssert.Contains(neighbours, (0, 1));

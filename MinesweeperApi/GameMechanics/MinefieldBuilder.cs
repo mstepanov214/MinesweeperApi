@@ -72,6 +72,6 @@ public class MinefieldBuilder
 
     private int CountNeigbourMines(int i, int j)
     {
-        return _field.ValidNeighbours(i, j).Count(n => _field[n.x][n.y].IsMine);
+        return _field.GetNeighbourIndexes(i, j).Count(n => _field[n.x][n.y].IsMine);
     }
 }
