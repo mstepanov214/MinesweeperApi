@@ -88,7 +88,7 @@ public class MinefieldBuilder
     {
         if (_field.TotalCount() == 0)
         {
-            throw new Exception($"Field not generated. Call nameof{nameof(GenerateField)} first.");
+            throw new Exception($"Field not generated. Call {nameof(GenerateField)} first.");
         }
     }
 }
