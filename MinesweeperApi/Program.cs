@@ -2,7 +2,8 @@ using System.Text.Json;
 
 using Microsoft.OpenApi.Models;
 
-using MinesweeperApi;
+using MinesweeperApi.Endpoints;
+using MinesweeperApi.Middleware;
 using MinesweeperApi.Models;
 using MinesweeperApi.Services;
 
@@ -31,7 +32,7 @@ builder.Services.AddSwaggerGen(opts =>
 
 var app = builder.Build();
 
-app.UseMiddlewares();
+app.UseExceptionMiddleware();
 
 app.MapEndpoints();
 

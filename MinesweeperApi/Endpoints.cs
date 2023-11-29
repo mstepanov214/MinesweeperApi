@@ -4,7 +4,7 @@ using MinesweeperApi.GameMechanics;
 using MinesweeperApi.Models;
 using MinesweeperApi.Services;
 
-namespace MinesweeperApi;
+namespace MinesweeperApi.Endpoints;
 
 public static class Endpoints
 {
