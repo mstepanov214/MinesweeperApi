@@ -7,17 +7,30 @@ namespace MinesweeperApiTest;
 public class MinefieldBuilderTest
 {
     [TestMethod]
-    public void MinefieldBuilder_CheckMinesCount()
+    [DataRow(10, 10, 5)]
+    [DataRow(5, 7, 5)]
+    [DataRow(4, 3, 4)]
+    [DataRow(7, 5, 5)]
+    [DataRow(5, 7, 5)]
+    [DataRow(10, 9, 7)]
+    [DataRow(6, 3, 1)]
+    [DataRow(30, 20, 30)]
+    public void MinefieldBuilder_CheckMinesCount(int width, int height, int minesCount)
     {
-        int width = 5;
-        int height = 5;
-        int minesCount = 7;
-
         var field = new MinefieldBuilder()
             .GenerateField(width, height)
             .SetMines(minesCount)
             .Build();
 
         Assert.AreEqual(field.TotalCount(c => c.IsMine), minesCount);
+    }
+
+    [TestMethod]
+    public void MinefieldBuilder_IncorrectStagesOrder_ThrowsException()
+    {
+        string expectedMessage = "Field not generated. Call GenerateField first.";
+
+        Assert.ThrowsException<Exception>(() => new MinefieldBuilder().SetMines(5), expectedMessage);
+        Assert.ThrowsException<Exception>(() => new MinefieldBuilder().SetDigits(), expectedMessage);
     }
 }

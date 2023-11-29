@@ -6,11 +6,8 @@ namespace MinesweeperApi.GameMechanics;
 public class MinefieldBuilder
 {
     private List<List<Cell>> _field = [];
-
-    public void Reset()
-    {
-        _field = [];
-    }
+    private int _width = 0;
+    private int _height = 0;
 
     public List<List<Cell>> Build()
     {
@@ -19,6 +16,13 @@ public class MinefieldBuilder
         Reset();
 
         return result;
+    }
+
+    public void Reset()
+    {
+        _field = [];
+        _width = 0;
+        _height = 0;
     }
 
     public MinefieldBuilder GenerateField(int width, int height)
@@ -30,15 +34,17 @@ public class MinefieldBuilder
             _field.Add(new List<Cell>(Enumerable.Repeat(new CellEmpty(), width)));
         }
 
+        _width = width;
+        _height = height;
+
         return this;
     }
 
     public MinefieldBuilder SetMines(int minesCount)
     {
-        int height = _field.Count;
-        int width = _field.First().Count;
-        int total = height * width;
+        ThrowIfFieldNotGenerated();
 
+        int total = _height * _width;
         var random = new Random();
         var emptyCellIndexes = Enumerable.Range(0, total).ToList();
 
@@ -47,7 +53,7 @@ public class MinefieldBuilder
             int rnd = random.Next(emptyCellIndexes.Count);
             int index = emptyCellIndexes[rnd];
 
-            _field[index % width][index / height] = new CellX();
+            _field[index / _width][index % _width] = new CellX();
             emptyCellIndexes.RemoveAt(rnd);
         }
 
@@ -56,9 +62,11 @@ public class MinefieldBuilder
 
     public MinefieldBuilder SetDigits()
     {
-        for (int i = 0; i < _field.Count; i++)
+        ThrowIfFieldNotGenerated();
+
+        for (int i = 0; i < _height; i++)
         {
-            for (int j = 0; j < _field[i].Count; j++)
+            for (int j = 0; j < _width; j++)
             {
                 if (_field[i][j].IsMine)
                 {
@@ -74,5 +82,13 @@ public class MinefieldBuilder
     private int CountNeigbourMines(int i, int j)
     {
         return _field.GetNeighbourIndexes(i, j).Count(n => _field[n.x][n.y].IsMine);
+    }
+
+    private void ThrowIfFieldNotGenerated()
+    {
+        if (_field.TotalCount() == 0)
+        {
+            throw new Exception($"Field not generated. Call nameof{nameof(GenerateField)} first.");
+        }
     }
 }
