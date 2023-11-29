@@ -128,6 +128,6 @@ public class MinesweeperEngine
 
     private bool HasNoMinesAround(int i, int j)
     {
-        return Field[i][j] is CellD cell && cell.HasNoMinesAround;
+        return Field[i][j] is CellDigit cell && cell.NoMinesAround;
     }
 }

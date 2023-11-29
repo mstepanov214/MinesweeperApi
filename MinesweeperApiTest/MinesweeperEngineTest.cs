@@ -15,10 +15,10 @@ public class MinesweeperEngineTest
         _game = new Game(width: 4, height: 4, minesCount: 2);
 
         _game.Field = [
-            [new CellX(), new CellD(2), new CellD(1), new CellD(1)],
-            [new CellD(1), new CellD(2), new CellX(), new CellD(1)],
-            [new CellD(0), new CellD(1), new CellD(1), new CellD(1)],
-            [new CellD(0), new CellD(0), new CellD(0), new CellD(0)]
+            [new CellX()/* */, new CellDigit(2), new CellDigit(1), new CellDigit(1)],
+            [new CellDigit(1), new CellDigit(2), new CellX()/* */, new CellDigit(1)],
+            [new CellDigit(0), new CellDigit(1), new CellDigit(1), new CellDigit(1)],
+            [new CellDigit(0), new CellDigit(0), new CellDigit(0), new CellDigit(0)]
         ];
     }
 

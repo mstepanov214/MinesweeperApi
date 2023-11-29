@@ -9,7 +9,7 @@ public class JsonCellConverter : JsonConverter<Cell>
 {
     public override Cell Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return new Cell(char.Parse(reader.GetString()!));
+        return Cell.FromJson(reader.GetString()!);
     }
 
     public override void Write(Utf8JsonWriter writer, Cell cell, JsonSerializerOptions options)
