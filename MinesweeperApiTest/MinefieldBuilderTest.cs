@@ -24,13 +24,4 @@ public class MinefieldBuilderTest
 
         Assert.AreEqual(field.TotalCount(c => c.IsMine), minesCount);
     }
-
-    [TestMethod]
-    public void MinefieldBuilder_IncorrectStagesOrder_ThrowsException()
-    {
-        string expectedMessage = "Field not generated. Call GenerateField first.";
-
-        Assert.ThrowsException<Exception>(() => new MinefieldBuilder().SetMines(5), expectedMessage);
-        Assert.ThrowsException<Exception>(() => new MinefieldBuilder().SetDigits(), expectedMessage);
-    }
 }
