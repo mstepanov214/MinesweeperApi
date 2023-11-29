@@ -5,42 +5,18 @@ using MinesweeperApi.JsonConverters;
 namespace MinesweeperApi.Models;
 
 [JsonConverter(typeof(JsonCellConverter))]
-public struct Cell(char value)
+public class Cell
 {
-    /// <summary>
-    /// Empty cell
-    /// </summary>
-    public static readonly Cell Empty = new Cell(CellValue.Empty);
-
-    /// <summary>
-    /// Mine cell
-    /// </summary>
-    public static readonly Cell X = new Cell(CellValue.X);
-
-    /// <summary>
-    /// Mine cell after victory
-    /// </summary>
-    public static readonly Cell M = new Cell(CellValue.M);
-
-    /// <summary>
-    /// Creates Cell with digit
-    /// </summary>
-    public static Cell WithDigit(int value)
+    internal Cell(char value)
     {
-        if (value < 0 || value > 8)
-        {
-            throw new ArgumentException("Invalid cell digit value", nameof(value));
-        }
-        return new Cell((char)(value + 48));
+        Value = value;
     }
 
-    public char Value { get; set; } = value;
+    public char Value { get; }
 
-    public readonly char DisplayedValue => Revealed ? Value : CellValue.Empty;
+    public char DisplayedValue => Revealed ? Value : CellValue.Empty;
 
-    public readonly bool IsMine => Value == CellValue.X || Value == CellValue.M;
-
-    public readonly bool HasNoMinesAround => Value == CellValue.Zero;
+    public bool IsMine => this is CellX;
 
     public bool Revealed { get; private set; }
 
@@ -48,6 +24,55 @@ public struct Cell(char value)
     {
         Revealed = true;
     }
+}
+
+/// <summary>
+/// Empty cell
+/// </summary>
+public class CellE : Cell
+{
+    public CellE() : base(CellValue.Empty) { }
+}
+
+/// <summary>
+/// Mine cell
+/// </summary>
+public class CellX : Cell
+{
+    public CellX() : base(CellValue.X) { }
+}
+
+/// <summary>
+/// Mine cell after victory
+/// </summary>
+public class CellM : Cell
+{
+    public CellM() : base(CellValue.M)
+    {
+        Reveal();
+    }
+}
+
+/// <summary>
+/// Cell with digit
+/// </summary>
+public class CellD : Cell
+{
+    public CellD(int digit) : base(ToChar(digit))
+    {
+        HasNoMinesAround = digit == 0;
+    }
+
+    private static char ToChar(int digit)
+    {
+        if (digit < 0 || digit > 8)
+        {
+            throw new ArgumentException("Invalid cell digit value", nameof(digit));
+        }
+        return (char)(digit + 48);
+    }
+
+    public bool HasNoMinesAround { get; }
 }
 
 static file class CellValue

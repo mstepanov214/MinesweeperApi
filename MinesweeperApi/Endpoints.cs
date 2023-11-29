@@ -2,7 +2,7 @@
 
 using MinesweeperApi.Models;
 using MinesweeperApi.Services;
-using MinesweeperApi.Utils;
+using MinesweeperApi.GameMechanics;
 
 namespace MinesweeperApi;
 

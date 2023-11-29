@@ -37,8 +37,6 @@ public static class TwoDListExtensions
 
     public static int TotalCount<T>(this List<List<T>> field)
     {
-        return field
-            .SelectMany(row => row)
-            .Count();
+        return TotalCount<T>(field, _ => true);
     }
 }

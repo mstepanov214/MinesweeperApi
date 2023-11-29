@@ -27,7 +27,7 @@ public class MinefieldBuilder
 
         while (_field.Count < height)
         {
-            _field.Add(new List<Cell>(Enumerable.Repeat(Cell.Empty, width)));
+            _field.Add(new List<Cell>(Enumerable.Repeat(new CellE(), width)));
         }
 
         return this;
@@ -46,7 +46,8 @@ public class MinefieldBuilder
         {
             int rnd = random.Next(emptyCellIndexes.Count);
             int index = emptyCellIndexes[rnd];
-            _field[index / width][index % height] = Cell.X;
+
+            _field[index % width][index / height] = new CellX();
             emptyCellIndexes.RemoveAt(rnd);
         }
 
@@ -64,7 +65,7 @@ public class MinefieldBuilder
                     continue;
                 }
                 var nmCount = CountNeigbourMines(i, j);
-                _field[i][j] = Cell.WithDigit(nmCount);
+                _field[i][j] = new CellD(nmCount);
             }
         }
         return this;

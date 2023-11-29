@@ -2,7 +2,7 @@
 using MinesweeperApi.Extensions;
 using MinesweeperApi.Models;
 
-namespace MinesweeperApi.Utils;
+namespace MinesweeperApi.GameMechanics;
 
 public class MinesweeperEngine
 {
@@ -83,7 +83,7 @@ public class MinesweeperEngine
 
         Field[i][j].Reveal();
 
-        if (Field[i][j].HasNoMinesAround)
+        if (HasNoMinesAround(i, j))
         {
             foreach (var (x, y) in Field.GetNeighbourIndexes(i, j))
             {
@@ -96,9 +96,9 @@ public class MinesweeperEngine
     {
         get
         {
-            return Field
-                .SelectMany(row => row)
-                .Count(cell => cell.IsMine && !cell.Revealed) == _game.MinesCount;
+            var revealedSafeCellsCount = Field.TotalCount(cell => !cell.IsMine && cell.Revealed);
+
+            return revealedSafeCellsCount == _game.Width * _game.Height - _game.MinesCount;
         }
     }
 
@@ -110,7 +110,7 @@ public class MinesweeperEngine
             {
                 if (IsMine(i, j))
                 {
-                    Field[i][j] = Cell.M;
+                    Field[i][j] = new CellM();
                 }
             }
         }
@@ -124,5 +124,10 @@ public class MinesweeperEngine
     private bool IsMine(int i, int j)
     {
         return Field[i][j].IsMine;
+    }
+
+    private bool HasNoMinesAround(int i, int j)
+    {
+        return Field[i][j] is CellD cell && cell.HasNoMinesAround;
     }
 }
