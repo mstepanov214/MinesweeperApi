@@ -25,18 +25,18 @@ public class MinesweeperEngine
         return new MinesweeperEngine(game);
     }
 
-    public Game PerformGameTurn(GameTurn turn)
+    public Game PickCell(int row, int col)
     {
-        ValidateGameTurn(turn);
+        ValidateCoordinates(row, col);
 
-        if (IsMine(turn.Row, turn.Col))
+        if (IsMine(row, col))
         {
             _game.Completed = true;
             RevealAll();
         }
         else
         {
-            Reveal(turn.Row, turn.Col);
+            Reveal(row, col);
 
             if (IsVictory)
             {
@@ -47,17 +47,17 @@ public class MinesweeperEngine
         return _game;
     }
 
-    private void ValidateGameTurn(GameTurn turn)
+    private void ValidateCoordinates(int row, int col)
     {
-        if (turn.Col < 0 || turn.Col > _game.Width)
+        if (col < 0 || col > _game.Width)
         {
             throw new MinesweeperException($"колонка должна быть неотрицательной и менее ширины ${_game.Width}");
         }
-        if (turn.Row < 0 || turn.Row > _game.Height)
+        if (row < 0 || row > _game.Height)
         {
             throw new MinesweeperException($"ряд должен быть неотрицательным и менее высоты ${_game.Height}");
         }
-        if (IsRevealed(turn.Row, turn.Col))
+        if (IsRevealed(row, col))
         {
             throw new MinesweeperException($"уже открытая ячейка");
         }

@@ -1,8 +1,8 @@
 ﻿using System.Net.Mime;
 
+using MinesweeperApi.GameMechanics;
 using MinesweeperApi.Models;
 using MinesweeperApi.Services;
-using MinesweeperApi.GameMechanics;
 
 namespace MinesweeperApi;
 
@@ -34,7 +34,7 @@ public static class Endpoints
     {
         var game = storage.GetById(turn.GameId);
         var engine = MinesweeperEngine.Init(game);
-        var resultGame = engine.PerformGameTurn(turn);
+        var resultGame = engine.PickCell(turn.Row, turn.Col);
 
         return Results.Ok(resultGame);
     }

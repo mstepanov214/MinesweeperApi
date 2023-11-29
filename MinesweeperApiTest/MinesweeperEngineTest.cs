@@ -27,13 +27,7 @@ public class MinesweeperEngineTest
     {
         var engine = MinesweeperEngine.Init(_game);
 
-        var turn = new GameTurn()
-        {
-            Row = 0,
-            Col = 0,
-        };
-
-        var resultGame = engine.PerformGameTurn(turn);
+        var resultGame = engine.PickCell(0, 0);
 
         Assert.IsTrue(resultGame.Completed);
         Assert.IsTrue(resultGame.Field.SelectMany(row => row).All(cell => cell.Revealed));
@@ -44,39 +38,19 @@ public class MinesweeperEngineTest
     {
         var engine = MinesweeperEngine.Init(_game);
 
-        var result1 = engine.PerformGameTurn(new GameTurn()
-        {
-            Row = 3,
-            Col = 1
-        });
+        var result1 = engine.PickCell(3, 1);
         Assert.IsFalse(result1.Completed);
 
-        var result2 = engine.PerformGameTurn(new GameTurn()
-        {
-            Row = 0,
-            Col = 1
-        });
+        var result2 = engine.PickCell(0, 1);
         Assert.IsFalse(result2.Completed);
 
-        var result3 = engine.PerformGameTurn(new GameTurn()
-        {
-            Row = 0,
-            Col = 2
-        });
+        var result3 = engine.PickCell(0, 2);
         Assert.IsFalse(result3.Completed);
 
-        var result4 = engine.PerformGameTurn(new GameTurn()
-        {
-            Row = 0,
-            Col = 3
-        });
+        var result4 = engine.PickCell(0, 3);
         Assert.IsFalse(result4.Completed);
 
-        var result5 = engine.PerformGameTurn(new GameTurn()
-        {
-            Row = 1,
-            Col = 3
-        });
+        var result5 = engine.PickCell(1, 3);
         Assert.IsTrue(result5.Completed);
         Assert.AreEqual(result5.Field.TotalCount(cell => cell.Revealed), _game.Width * _game.Height);
         Assert.AreEqual(result5.Field.TotalCount(cell => cell is CellM), _game.MinesCount);
