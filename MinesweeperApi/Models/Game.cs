@@ -39,10 +39,10 @@ public class Game
             throw new MinesweeperException("высота поля должна быть не менее 2 и не более 30");
         }
 
-        int maxCellCount = Width * Height - 1;
-        if (MinesCount > maxCellCount || MinesCount < 1)
+        int cellCount = Width * Height;
+        if (MinesCount >= cellCount || MinesCount < 1)
         {
-            throw new MinesweeperException($"количество мин должно быть не менее 1 и строго менее количества ячеек {maxCellCount}");
+            throw new MinesweeperException($"количество мин должно быть не менее 1 и строго менее количества ячеек {cellCount}");
         }
     }
 
