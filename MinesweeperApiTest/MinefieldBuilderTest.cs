@@ -1,3 +1,4 @@
+using MinesweeperApi.Extensions;
 using MinesweeperApi.GameMechanics;
 
 namespace MinesweeperApiTest;
@@ -17,8 +18,6 @@ public class MinefieldBuilderTest
             .SetMines(minesCount)
             .Build();
 
-        var cells = field.SelectMany(row => row);
-
-        Assert.AreEqual(cells.Count(c => c.IsMine), minesCount);
+        Assert.AreEqual(field.TotalCount(c => c.IsMine), minesCount);
     }
 }
