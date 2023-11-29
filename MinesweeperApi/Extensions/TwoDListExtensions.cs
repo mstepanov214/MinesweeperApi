@@ -27,4 +27,18 @@ public static class TwoDListExtensions
                col >= 0 &&
                col < field[row].Count;
     }
+
+    public static int TotalCount<T>(this List<List<T>> field, Func<T, bool> predicate)
+    {
+        return field
+            .SelectMany(row => row)
+            .Count(predicate);
+    }
+
+    public static int TotalCount<T>(this List<List<T>> field)
+    {
+        return field
+            .SelectMany(row => row)
+            .Count();
+    }
 }
