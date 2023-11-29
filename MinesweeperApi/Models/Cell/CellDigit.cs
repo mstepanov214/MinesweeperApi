@@ -2,23 +2,16 @@
 
 public class CellDigit : Cell
 {
-    public CellDigit(char charDigit) : base(charDigit)
-    {
-        ValidateDigitValue();
-    }
+    public CellDigit(int digit) : base(ToChar(digit)) { }
 
-    public CellDigit(int digit) : base((char)(digit + 48))
+    private static char ToChar(int digit)
     {
-        ValidateDigitValue();
+        if (digit < 0 || digit > 8)
+        {
+            throw new ArgumentException("Invalid cell digit value", nameof(digit));
+        }
+        return (char)(digit + 48);
     }
 
     public bool NoMinesAround => Value == CellValue.Zero;
-
-    private void ValidateDigitValue()
-    {
-        if (Value < '0' || Value >= '9')
-        {
-            throw new ArgumentException("Invalid cell digit value");
-        }
-    }
 }

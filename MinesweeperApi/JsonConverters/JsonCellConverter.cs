@@ -7,9 +7,9 @@ namespace MinesweeperApi.JsonConverters;
 
 public class JsonCellConverter : JsonConverter<Cell>
 {
-    public override Cell Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Cell? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return Cell.FromJson(reader.GetString()!);
+        throw new NotImplementedException();
     }
 
     public override void Write(Utf8JsonWriter writer, Cell cell, JsonSerializerOptions options)
