@@ -5,14 +5,9 @@ using MinesweeperApi.JsonConverters;
 namespace MinesweeperApi.Models;
 
 [JsonConverter(typeof(JsonCellConverter))]
-public class Cell
+public abstract class Cell(char value)
 {
-    protected Cell(char value)
-    {
-        Value = value;
-    }
-
-    public char Value { get; }
+    public char Value { get; } = value;
 
     public char DisplayedValue => Revealed ? Value : CellValue.Empty;
 
