@@ -7,4 +7,6 @@ public interface IGameStorage
     Game Create(CreateGameDto dto);
 
     Game GetById(Guid id);
+
+    bool Remove(Guid id);
 }

@@ -36,6 +36,11 @@ public static class Endpoints
         var engine = MinesweeperEngine.Init(game);
         var resultGame = engine.PickCell(turn.Row, turn.Col);
 
+        if (resultGame.Completed)
+        {
+            Task.Delay(TimeSpan.FromMinutes(10))
+                .ContinueWith(_ => storage.Remove(resultGame.GameId));
+        }
         return Results.Ok(resultGame);
     }
 }
